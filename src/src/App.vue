@@ -1,4 +1,18 @@
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+
+const count = ref(0)
+console.log(count.value)
+count.value++
+console.log(count)
+
+function increment() {
+  count.value++
+}
+
+const state = reactive({ count: 0 })
+console.log(state)
+
 const message: string = 'Hello World!'
 
 const html = '<span style="color: red">This should be red.</span>'
@@ -12,13 +26,21 @@ const objectOfAttrs = {
   style: 'background-color:green',
 }
 
-const seen = true;
+const seen = true
 
 const event = 'click'
 </script>
 
 <template>
   <main>
+    <button @click="increment">
+      {{ count }}
+    </button>
+
+    <button @click="state.count++">
+      {{ state.count }}
+    </button>
+
     <h1>{{ message }}</h1>
 
     <div>
