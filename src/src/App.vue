@@ -1,63 +1,40 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 
-const parentMessage = ref('Parent message');
-const items = [
-  {id:0, message: 'Foo'},
-  {id: 1,message: 'Bar'},
-]
+const count = ref(0)
 
-const myObject = reactive({
-  title: 'How to do lists in Vue',
-  author: 'Jane Doe',
-  publishedAt: '2016-04-10',
-})
+const name = ref('Vue.js')
+function greet(event) {
+  alert(`Hello ${name.value}`)
+  if (event) {
+    alert(event.target.tagName)
+  }
+}
+
+function say(message) {
+  alert(message)
+}
 </script>
 
 <template>
   <main>
     <div>
-      <ul>
-        <li v-for="item in items">
-          {{item.message}}
-        </li>
-      </ul>
-      <ul>
-        <li v-for="(item, index) in items">
-          {{ parentMessage}} - {{index}} - {{ item.message}}
-        </li>
-      </ul>
-      <ul>
-        <li v-for="({message}, index) in items">
-          {{ message }} {{index}}
-        </li>
-      </ul>
+      <button @click="count++">Add 1</button>
+      <p>Count is: {{ count }}</p>
     </div>
 
     <div>
-      <ul>
-        <li v-for="(value, key, index) in myObject">
-          {{ index }}. {{ key }}: {{ value }}
-        </li>
-      </ul>
+      <button @click="greet">Greeting</button>
     </div>
 
     <div>
-      <!-- 1-10 -->
-      <span v-for="n in 10">{{n}}</span>
+      <button @click="say('Hello')">Say hello</button>
+      <button @click="say('Bye')">Say bye</button>
     </div>
 
     <div>
-      <template v-for="item in items">
-        <li>{{item.message}}</li>
-        <li class="divider" role="presentation"></li>
-      </template>
-    </div>
-
-    <div>
-      <template v-for="item in items" :key="item.id">
-        <li>{{item.message}}</li>
-      </template>
+      <input @keyup.page-down="console.log(123)">
+      <input @keyup.alt.enter="console.log(123)">
     </div>
   </main>
 </template>
