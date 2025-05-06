@@ -1,52 +1,47 @@
 <script setup lang="ts">
-import {computed, reactive, ref} from 'vue'
+import {computed, reactive, ref} from "vue";
 
-const author = reactive({
-  name: 'John Doe',
-  books: ['Vue 2 - Advanced Guider', 'Vue 3 - Basic Guide', 'Vue 4 - The msytery'],
+const isActive = false
+
+const isActive1 = ref(true)
+const hasError = ref(false)
+
+const classObject = reactive({
+  active: true,
+  'text-danger': true,
 })
 
-const publishedBooksMessage = computed(() => {
-  return author.books.length > 0 ? 'Yes' : 'No'
-})
-console.log(publishedBooksMessage)
+const classObject1 = computed(() => ({
+  active: isActive1.value,
+  'has-error': hasError.value,
+}))
 
+const activeClass = ref('active')
+const errorClass = ref('text-danger')
 
-
-const firstName = ref('John')
-const lastName = ref('Doe')
-
-const fullName = computed({
-  get() {
-    return firstName.value + ' ' + lastName.value
-  },
-  set(newValue) {
-    [firstName.value, lastName.value] = newValue.split(' ')
-  }
-})
-fullName.value = 'John Doe'
-console.log(firstName.value)
-console.log(lastName.value)
-
-
-const count = ref(2)
-const alwaysSmall = computed((prevValue) => {
-  console.log(prevValue)
-  return count.value;
-})
-count.value++
-console.log(alwaysSmall.value)
-count.value++
-console.log(alwaysSmall.value)
+const activeColor = ref('red')
+const fontSize = ref(30)
 </script>
 
 <template>
   <main>
-    <div>
-      <p>Has published books:</p>
-      <span>{{ publishedBooksMessage }}</span>
+    <div :class="{active: isActive}">isActive</div>
+
+    <div
+      class="static"
+      :class="{ active: isActive1, 'text-danger': hasError }"
+    >
+      Binding to Objects
     </div>
-    <button @click="author.books = []"></button>
+    <div class="static" :class="classObject">Binding to Objects</div>
+    <div class="static" :class="classObject1">Binding to Objects</div>
+
+    <div :class="[activeClass, errorClass]">Binding to Arrays</div>
+    <div :class="[isActive1 ? activeClass : '', errorClass]">Binding to Arrays</div>
+    <div :class="[{ [activeClass]: isActive }, errorClass]">Binding to Arrays</div>
+
+    <div :style="{color: activeColor, fontSize: fontSize + 'px'}">Binding Inline Styles</div>
+    <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">Multiple array values</div>
   </main>
 </template>
 
