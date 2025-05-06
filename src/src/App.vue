@@ -1,47 +1,46 @@
 <script setup lang="ts">
-import {computed, reactive, ref} from "vue";
+import {ref} from "vue";
 
-const isActive = false
+const awesome = ref(true)
 
-const isActive1 = ref(true)
-const hasError = ref(false)
-
-const classObject = reactive({
-  active: true,
-  'text-danger': true,
-})
-
-const classObject1 = computed(() => ({
-  active: isActive1.value,
-  'has-error': hasError.value,
-}))
-
-const activeClass = ref('active')
-const errorClass = ref('text-danger')
-
-const activeColor = ref('red')
-const fontSize = ref(30)
+const type = 'C'
 </script>
 
 <template>
   <main>
-    <div :class="{active: isActive}">isActive</div>
+    <div>
+      <button @click="awesome = !awesome"></button>
 
-    <div
-      class="static"
-      :class="{ active: isActive1, 'text-danger': hasError }"
-    >
-      Binding to Objects
+      <h1 v-if="awesome">Vue is awesome</h1>
+      <h1 v-else>Oh no</h1>
     </div>
-    <div class="static" :class="classObject">Binding to Objects</div>
-    <div class="static" :class="classObject1">Binding to Objects</div>
 
-    <div :class="[activeClass, errorClass]">Binding to Arrays</div>
-    <div :class="[isActive1 ? activeClass : '', errorClass]">Binding to Arrays</div>
-    <div :class="[{ [activeClass]: isActive }, errorClass]">Binding to Arrays</div>
+    <div>
+      <div v-if="type === 'A'">
+        A
+      </div>
+      <div v-else-if="type === 'B'">
+        B
+      </div>
+      <div v-else-if="type === 'C'">
+        C
+      </div>
+      <div v-else>
+        Not A/B/C
+      </div>
+    </div>
 
-    <div :style="{color: activeColor, fontSize: fontSize + 'px'}">Binding Inline Styles</div>
-    <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">Multiple array values</div>
+    <div>
+      <template v-if="true">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </template>
+    </div>
+
+    <div>
+      <h1 v-show="false">Hello</h1>
+    </div>
   </main>
 </template>
 
